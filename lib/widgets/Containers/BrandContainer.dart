@@ -1,28 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:qat3/Models/BrandModel.dart';
 import 'package:qat3/constants.dart';
+import 'package:qat3/widgets/Containers/Circularimage.dart';
 import '../../Screens/Brands/BrandProducts.dart';
 
 class BrandContainer extends StatelessWidget {
-  final String BrandName;
-  const BrandContainer({super.key, required this.BrandName, });
+  final BrandModle brand;
+  final void Function()? ontap;
+  const BrandContainer({super.key, required this.brand,this.ontap });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        Navigator.pushNamed(context, BrandProducts.id);
-      },
+      onTap: ontap,
       child: Container(
-        padding: const EdgeInsets.only(left: 15,right: 15,top: 13,bottom: 10),
+        padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           color: KBackground.withOpacity(.5),
+
         ),
         child: Row(
           children: [
             Flexible(
-              child: Container(
-                child:Image.asset('images/logos/7.png',width: 30,height: 30),
+              child:Circularimage(
+                radius: 35,
+                image: brand.image,
               ),
             ),
             Expanded(
@@ -31,13 +34,13 @@ class BrandContainer extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    child: Text(BrandName,style:const TextStyle(color: KDarkestColor,
+                    child: Text(brand.name,style:const TextStyle(color: KDarkestColor,
                         fontSize: 14,
                     fontWeight: FontWeight.bold),
                     ),
                   ),
                   Container(
-                    child: Text('255 products',style: TextStyle(
+                    child: Text('${brand.productCount} products',style: TextStyle(
                       color: KDarkestColor.withOpacity(.4),
                       fontSize: 11
                     ),overflow: TextOverflow.ellipsis,

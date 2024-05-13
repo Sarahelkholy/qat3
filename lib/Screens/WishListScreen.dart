@@ -1,5 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:qat3/Controller/Products/FavouritesController.dart';
+import 'package:qat3/Loader/Shimmer/VerticalProductShimmer.dart';
+import 'package:qat3/Screens/Product/HomePage.dart';
 import 'package:qat3/widgets/Bars/Appbar.dart';
+import 'package:qat3/widgets/Class/CloudHelperFunctions.dart';
+import 'package:qat3/widgets/NavigationMenu.dart';
 
 import '../constants.dart';
 import '../widgets/GrideLayout.dart';
@@ -9,39 +17,37 @@ class WishListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 20),
-      child: Scaffold(
+    final controller=FavouritesController.instance;
+    return Scaffold(
 
-        appBar:Appbar(title:'WishList', Child:IconButton(onPressed:(){}, icon: const Icon(Icons.add,size: 25,color: KDarkBlue,)),
-        padd: const EdgeInsets.only(top: 15,left: 5),),
-        backgroundColor: Colors.white,
-        body: ListView(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 2),
-              child: Container(
-                padding: const EdgeInsets.only(top:30),
-                decoration: const BoxDecoration(
-                    color:KBackground,
-                    borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(35),
-                        topLeft: Radius.circular(35)
-                    )
-                ),
-                child: Column(
-                  children: [
-                    GrideLayout(itemCount: 8,itemBuilder: (_,index){
-                      return const ItemContainer(Name: 'sweatshirt',
-                        lable: 'Basic Hoodie',price: 480,SaleTag: true,sale: 50,brand: 'Basic Look',
+      appBar:Appbar(title:'WishList',height: 85,padd: const EdgeInsets.only(top: 30,left: 3),),
+      backgroundColor: Colors.white,
+      body: ListView(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 2),
+            child: Column(
+              children: [
+                Obx(()=>
+                  FutureBuilder(
+                    future: controller.favouriteProducts(),
+                    builder: (context,snapshot){
+                      final emptywidget=Padding(
+                        padding: const EdgeInsets.only(top: 250),
+                        child: Center(child: Text('Whoooops! Wishlist is empty.....',style: TextStyle(fontSize: 18,color: KLightGray),)),
                       );
-                    },)
-                  ],
-                ),
-              ),
-            )
-          ],
-        ),
+                      const loader=VerticalProductShimmer(itemCount: 6,);
+                      final widget=CloudHelperFunctions.checkMultiRecordState(snapshot:snapshot ,loader: loader,nothingFound: emptywidget);
+                      if(widget!=null) return widget;
+                      final products=snapshot.data!;
+                      return GrideLayout(itemCount: products.length,itemBuilder: (_,index)=>ItemContainer(product:products[index],showborder: true,));
+                    },
+                  ),
+                )
+              ],
+            ),
+          )
+        ],
       ),
     );
   }

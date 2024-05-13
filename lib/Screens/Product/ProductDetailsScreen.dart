@@ -1,36 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:qat3/Enums.dart';
 import 'package:qat3/widgets/ProductScreenComponents/AddToCart.dart';
 import 'package:qat3/widgets/ProductScreenComponents/ProductAttributes.dart';
 import 'package:qat3/widgets/ProductScreenComponents/ProductMetaData.dart';
 import 'package:qat3/widgets/ProductScreenComponents/ProductImageSlider.dart';
 import 'package:qat3/widgets/SectionHeading.dart';
 import 'package:readmore/readmore.dart';
-
+import '../../Models/ProductModel.dart';
 import '../../constants.dart';
 import 'ProductReviewsScreen.dart';
 class ProductDetails extends StatelessWidget {
   static const id='ProductDetails';
-  const ProductDetails({Key? key}) : super(key: key);
+  final ProductModel product;
+
+  const ProductDetails({ required this.product});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      bottomNavigationBar: const AddToCart(),
+      bottomNavigationBar:  AddToCart(product:product),
       body: SingleChildScrollView(
         child: Column(
           children: [
-           const ProductImageSlider(),
+            ProductImageSlider(product: product,),
             Padding(
                 padding: const EdgeInsets.only(left: 20,right: 10,top: 12),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const ProductMetaData(),
-                const ProductAttributes(),
+                 ProductMetaData(product: product),
+               if(product.productType==ProductType.Variable.toString())  ProductAttributes(product: product),
                 const SectionHeading(title: 'Description',padd: EdgeInsets.only(top: 13),showButton: false,),
-                const SizedBox(height:12,),
-                const ReadMoreText(
-                  'this is the product description on the brand website jkhkjgfdgjgyuglliukjhkuhyiuff',
+                const SizedBox(height:10,),
+                 ReadMoreText(
+                 product.description,
                   style: TextStyle(color: KDarkestColor),
                   trimLines: 1,
                   trimMode: TrimMode.Line,
@@ -40,7 +44,6 @@ class ProductDetails extends StatelessWidget {
                   lessStyle: TextStyle(color: KDarkestColor,fontWeight: FontWeight.bold,fontSize: 15),
                 ),
                 const SizedBox(height: 12,),
-                const Divider(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:qat3/constants.dart';
 
 import '../widgets/NavigationMenu.dart';
@@ -22,8 +23,7 @@ class SuccessPayment extends StatelessWidget {
           const SizedBox(height: 16,),
           SizedBox(
             height: 40,
-            child: ElevatedButton(onPressed: (){
-              Navigator.pushNamed(context, NavigationMenu.id);},
+            child: ElevatedButton(onPressed: ()=>Get.to(()=>NavigationMenu()),
               style: ElevatedButton.styleFrom(
                   backgroundColor: KDarkBlue,
               ),

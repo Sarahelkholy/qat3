@@ -6,7 +6,7 @@ import 'package:qat3/Data/Repositories/UserRepositories.dart';
 import 'package:qat3/Loader/FullScreenLoader.dart';
 import 'package:qat3/Loader/Loaders.dart';
 import 'package:qat3/Screens/Start/VerifyemailScreen.dart';
-import 'package:qat3/UserModel.dart';
+import 'package:qat3/Models/UserModel.dart';
 
 class SignUpController extends GetxController{
 static SignUpController get instance=>Get.find();

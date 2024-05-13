@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:qat3/constants.dart';
 class AddRemove extends StatelessWidget {
+  final int quantity;
+  final VoidCallback? add,remove;
   const AddRemove({
-    super.key,
+    required this.quantity,this.add,this.remove
   });
 
   @override
@@ -17,11 +19,11 @@ class AddRemove extends StatelessWidget {
             borderRadius: BorderRadius.circular(100),
           ),
           child: InkWell(
-              onTap: (){},
+              onTap: remove,
               child:const Icon(Icons.remove,size: 16,color: Colors.white,)),
         ),
         const SizedBox(width: 8,),
-        const Text('2',style: TextStyle(color: KDarkestColor,fontSize: 17),),
+         Text(quantity.toString(),style: TextStyle(color: KDarkestColor,fontSize: 17),),
         const SizedBox(width: 8,),
         Container(
           height: 25,
@@ -31,7 +33,7 @@ class AddRemove extends StatelessWidget {
               color: KLightGray
           ),
           child: InkWell(
-              onTap: (){},
+              onTap: add,
               child:const Icon(Icons.add,size: 16,color: Colors.white,)),),
       ],
     );

@@ -48,6 +48,13 @@ dependencies:
   firebase_auth: ^4.14.0
   cloud_firestore: ^4.13.0
   google_sign_in: ^6.1.0
+  shimmer: ^3.0.0
+  image_picker: ^1.1.0
+  firebase_storage: ^11.5.4
+  cached_network_image: ^3.3.1
+  firebase_app_check: ^0.2.2+2
+  intl: ^0.19.0
+
 
 dev_dependencies:
   flutter_test:
@@ -74,8 +81,42 @@ flutter:
   uses-material-design: true
   assets:
     - images/
+    - images/pay/
+    - images/brands/
     - images/logos/
     - images/products/
+    - images/products/1/
+    - images/products/2/
+    - images/products/3/
+    - images/products/4/
+    - images/products/5/
+    - images/products/6/
+    - images/products/7/
+    - images/products/8/
+    - images/products/9/
+    - images/products/10/
+    - images/products/11/
+    - images/products/12/
+    - images/products/13/
+    - images/products/14/
+    - images/products/15/
+    - images/products/16/
+    - images/products/17/
+    - images/products/18/
+    - images/products/19/
+    - images/products/20/
+    - images/products/21/
+    - images/products/22/
+    - images/products/23/
+    - images/products/024/
+    - images/products/25/
+    - images/products/26/
+    - images/products/27/
+    - images/products/28/
+    - images/products/29/
+    - images/products/30/
+    - images/banners/
+
 
   # To add assets to your application, add an assets section, like this:
   # assets:

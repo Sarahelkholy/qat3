@@ -1,24 +1,26 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
+import 'package:qat3/Controller/Products/ProductController.dart';
+import 'package:qat3/Models/ProductModel.dart';
 import 'package:qat3/constants.dart';
-
+import 'package:qat3/widgets/Products/FavouritIcon.dart';
+import 'package:qat3/widgets/Products/ProductAddToCart.dart';
+import 'package:qat3/widgets/Products/ProductPrice.dart';
 import '../../Screens/Product/ProductDetailsScreen.dart';
 class ItemContainer extends StatelessWidget {
-  final String Name;
-  final String lable;
-  final double price;
-  final bool SaleTag;
-  final int? sale;
-  final String brand;
+  final ProductModel product;
   final bool showborder;
   final double? productsize;
-  const ItemContainer({super.key, required this.Name,required this.lable,required this.price,this.SaleTag=false,this.sale,required this.brand,this.showborder=false,this.productsize=160});
+  const ItemContainer({super.key,required this.product ,this.showborder=false,this.productsize=127});
 
   @override
   Widget build(BuildContext context) {
+    final controller=ProductController.instace;
+    final sale=controller.calculateSalePercentage(product.price, product.salePrice);
     return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(context, ProductDetails.id);
-      },
+      onTap: ()=>Get.to(()=>ProductDetails(product: product)),
       child: Container(
         padding: const EdgeInsets.only(left: 15,right: 15,top: 13,bottom: 10),
         decoration: BoxDecoration(
@@ -29,14 +31,12 @@ class ItemContainer extends StatelessWidget {
         child:Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                InkWell(
-                  onTap: (){},
-                  child:const Icon(Icons.favorite_border,color: KDarkBlue,size: 20)
-                  ),
-                if(SaleTag) Container(
+                FavouritIcon(productId: product.id,size: 21,),
+               if(sale!=null) Container(
                   alignment: Alignment.topLeft,
                   height: 20,
                   width: 40,
@@ -54,49 +54,40 @@ class ItemContainer extends StatelessWidget {
                 ),
               ],
             ),
-            InkWell(
-              onTap: () {
-                Navigator.pushNamed(context, ProductDetails.id);
-              },
-              child: Container(
-                margin: const EdgeInsets.all(10),
-                child: Image.asset('images/products/$Name.jpg',height: productsize,width: productsize,),
-              ),
-            ),
+
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(lable,
+                Container(
+                  margin: const EdgeInsets.all(10),
+                  child: Image.asset(product.thumbnail,height: productsize,width: productsize,),
+                ),
+                Text(product.title,overflow: TextOverflow.ellipsis,maxLines: 2,
                   style: const TextStyle(
                     color: KDarkestColor,
-                    fontSize: 15,
+                    fontSize: 14,
                     fontWeight: FontWeight.w600
                 ),),
                 const SizedBox(height: 2,),
-                Text(brand,style: TextStyle(color: KDarkestColor.withOpacity(.5),
-                fontSize: 10),),
+                Text(product.brand!.name,style: TextStyle(color:KDarkGray, fontSize: 10),),
               ],
             ),
             const Spacer(),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('$price LE',style: const TextStyle(
-                    color: KDarkestColor,
-                    fontSize: 15,
-                  fontWeight: FontWeight.w800
-                ),),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if(product.salePrice>0)
+                      ProductPrice(price: product.price.toString(),lineThrogh: true,color: KLightGray,size: 12,),
+                      ProductPrice(price: controller.getProductPrice(product),size: 14,)
+                  ],
+                ),
+
+
                 //add cart
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius:BorderRadius.circular(20),
-                    color: KDarkBlue,
-                  ),
-                  child: const SizedBox(
-                    height: 26,
-                      width: 26,
-                      child: Icon(Icons.add,color: Colors.white,size: 15,)),
-                )
+                ProductAddToCart(product: product,)
               ],
             )
           ],
@@ -105,3 +96,5 @@ class ItemContainer extends StatelessWidget {
     );
   }
 }
+
+

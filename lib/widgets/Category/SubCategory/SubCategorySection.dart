@@ -21,12 +21,10 @@ class SubCategorySection extends StatelessWidget {
       children: [
         SectionHeading(title:Sectiontitle ,onPress: (){} ,padd: const EdgeInsets.only(left: 10,right: 5),),
         GrideLayout(itemCount: itemscount,itemBuilder: (_,index){
-          return SafeArea(
-            child: ItemContainer(Name: Name,
-              lable: lable,price: price,brand: brand,
-              sale: sale,SaleTag: SaleTag,showborder: showborder,productsize: 90,
+          /*return SafeArea(
+            child: ItemContainer(showborder: showborder,productsize: 90,
             ),
-          );
+          );*/
         },
         mainAxis: 240,)
       ],

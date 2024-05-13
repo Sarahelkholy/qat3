@@ -6,14 +6,17 @@ class Tabbar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.white,
-      child: TabBar(
-        tabs: taps,
-        isScrollable: true,
-        indicatorColor: KLightGray,
-        labelColor: KDarkBlue,
-        unselectedLabelColor: KDarkGray,
+    return Positioned(
+      left: 10,
+      child: Material(
+        color: Colors.white,
+        child: TabBar(
+          tabs: taps,
+          isScrollable: true,
+          indicatorColor: KLightGray,
+          labelColor: KDarkBlue,
+          unselectedLabelColor: KDarkGray,
+        ),
       ),
     );
   }

@@ -32,6 +32,16 @@ class Validator{
     }
     return null;
   }
+  static String? validateCard(String?value){
+    if(value==null||value.isEmpty){
+      return'Card number is required.';
+    }
+    final cardRegExp=RegExp(r'^\d{16}$');
+    if(!cardRegExp.hasMatch(value)){
+      return'Invalid card number.';
+    }
+    return null;
+  }
   static String? validatePhone(String? value){
     if(value==null||value.isEmpty){
       return'Phone number is required.';

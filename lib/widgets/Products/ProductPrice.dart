@@ -16,6 +16,7 @@ class ProductPrice extends StatelessWidget {
       overflow: TextOverflow.ellipsis,
       style:TextStyle(color: color,fontSize: size).apply(decoration:lineThrogh? TextDecoration.lineThrough:null),
 
+
     );
   }
 }

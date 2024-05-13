@@ -1,4 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:qat3/Controller/CartController.dart';
+import 'package:qat3/Controller/Products/ProductController.dart';
+import 'package:qat3/Loader/Shimmer/VerticalProductShimmer.dart';
 import 'package:qat3/constants.dart';
 import 'package:qat3/widgets/Category/CategoriesBar.dart';
 import '../../widgets/GrideLayout.dart';
@@ -7,7 +13,6 @@ import '../../widgets/SectionHeading.dart';
 import 'package:qat3/widgets/Bars/Appbar.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:qat3/widgets/Bars/Searchbar.dart';
-
 import '../CartScreen.dart';
 import 'AllProductScreen.dart';
 
@@ -20,27 +25,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  //final _auth=FirebaseAuth.instance;
-  //late User LoggedUser;
 
   @override
-  /*void initState() {
-    super.initState();
-    getcurrentuser();
-  }*/
-  /*void getcurrentuser()async{
-    try {
-      final user = _auth.currentUser;
-      if(user!=null){
-        LoggedUser=user;
-        print(LoggedUser.email);
-      }
-    }catch(e){
-      print(e);
-    }
-  }*/
-  @override
   Widget build(BuildContext context) {
+    final controller=Get.put(ProductController());
+    final cartController=Get.put(CartController());
     return Scaffold(
       backgroundColor: Colors.white,
       body: ListView(
@@ -48,9 +37,11 @@ class _HomePageState extends State<HomePage> {
           Appbar(title: 'Home',Child: badges.Badge(
             badgeColor: KLightGray,
             padding: const EdgeInsets.all(4),
-            badgeContent: const Text('3',style: TextStyle(
-                color: KDarkBlue
-            ),),
+            badgeContent:  Obx(
+              ()=> Text(cartController.noOfCartItems.value.toString(),style: TextStyle(
+                  color: KDarkBlue
+              ),),
+            ),
             child: InkWell(
               onTap: (){
                 Navigator.pushNamed(context, CartScreen.id);
@@ -77,20 +68,30 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(height: 15,),
                 const SectionHeading(title: 'Popular Categories',showButton: false,),
                 const CategoriesBar(),
-                SectionHeading(title: 'Popular Products',onPress: (){
-                  Navigator.pushNamed(context, AllProductScreen.id);
-                },),
+                SectionHeading(title: 'Popular Products',onPress: ()=>Get.to(()=>
+                    AllProductScreen(title:  'Popular Products',
+                    futureMethod: controller.fetchAllFeaturedProducts(),)
+                )),
                 //change items implementation
-                GrideLayout(itemCount: 6,itemBuilder: (_,index){
-                  return const ItemContainer(Name: 'sweatshirt',
-                    lable: 'Basic Hoodie',price: 480,SaleTag: true,sale: 50,brand: 'Basic Look',
-                  );
-                },)
+              Obx((){
+                  if(controller.isLoading.value) return const VerticalProductShimmer();
+                  if(controller.featuredProducts.isEmpty)
+                    return Center(child: Text('No Data Found',style: TextStyle(color: KDarkBlue),),);
+                   return  GrideLayout(
+                    itemCount: controller.featuredProducts.length,
+                    itemBuilder: (_,index){
+                      final product=controller.featuredProducts[index];
+                    return  ItemContainer(product:product );
+                  },);
+                }
+
+              )
                     ],
                   ),
                 )
               ],
       ),
+
           );
 
   }

@@ -12,9 +12,6 @@ import 'package:qat3/constants.dart';
 import 'package:qat3/widgets/Class/ChepTheme.dart';
 import 'package:qat3/widgets/NavigationMenu.dart';
 import 'Screens/Brands/AllBrandScreen.dart';
-import 'Screens/Brands/BrandProducts.dart';
-import 'Screens/Product/AllProductScreen.dart';
-import 'Screens/Product/ProductDetailsScreen.dart';
 import 'Screens/Product/ProductReviewsScreen.dart';
 import 'Screens/Profile/Orders/OrderScreen.dart';
 import 'Screens/Start/LoginScreen.dart';
@@ -38,19 +35,15 @@ class QAT3 extends StatelessWidget {
         LoginScreen.id:(context)=>const LoginScreen(),
         RegisterScreen.id:(context)=>const RegisterScreen(),
         HomePage.id:(context)=>const HomePage(),
-        NavigationMenu.id:(context)=>const NavigationMenu(),
+
         ProfileScreen.id:(context)=>const ProfileScreen(),
-        ProductDetails.id:(context)=>const ProductDetails(),
         AddressScreen.id:(context)=>const AddressScreen(),
         AddNewAddress.id:(context)=>const AddNewAddress(),
         CartScreen.id:(context)=>const CartScreen(),
         CheckOutScreen.id:(context)=>const CheckOutScreen(),
         SuccessPayment.id:(context)=>const SuccessPayment(),
         OrderScreen.id:(context)=>const OrderScreen(),
-        SubCategoryScreen.id:(context)=>const SubCategoryScreen(),
-        AllProductScreen.id:(context)=>const AllProductScreen(),
         AllBrandScreen.id:(context)=>const AllBrandScreen(),
-        BrandProducts.id:(context)=>const BrandProducts(),
         ProductReviewsScreen.id:(context)=>const ProductReviewsScreen(),
       },
       home: const Scaffold(backgroundColor: KBackground,body: Center(child: CircularProgressIndicator(color: KDarkBlue,),),),
